@@ -1,0 +1,15 @@
+image: Ubuntu
+
+stack: jdk 11
+
+branches:
+  only:
+    - master
+
+build: off
+
+install:
+  - java -jar ./artifacts/app-card-delivery.jar -port=7777 &
+
+build_script:
+  - ./gradlew test -Dselenide.headless=true
