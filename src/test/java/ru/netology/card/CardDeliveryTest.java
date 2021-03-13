@@ -2,6 +2,7 @@ package ru.netology.card;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selectors;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -18,10 +19,15 @@ public class CardDeliveryTest {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     LocalDate nextDate = date.plusDays(3);
 
+    @BeforeEach
+    void setUp() {
+        open("http://0.0.0.0:7777");
+    }
+
 
     @Test
     void shouldCorrectValues() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("Воронеж");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));
@@ -34,7 +40,7 @@ public class CardDeliveryTest {
 
     @Test
     void IfIncorrectCityValue() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("Voronezh");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));
@@ -48,7 +54,7 @@ public class CardDeliveryTest {
 
     @Test
     void IfIncorrectNameValue() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("Воронеж");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));
@@ -56,13 +62,13 @@ public class CardDeliveryTest {
         $("[name = 'phone']").setValue("+79777777777");
         $("[data-test-id = 'agreement']").click();
         $(Selectors.byText("Забронировать")).click();
-        $("[data-test-id = 'name'] .input_invalid .input__sub")
+        $("[data-test-id = 'name'] .input__inner .input__sub")
                 .shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
     void IfIncorrectPhoneValue() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("Воронеж");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));
@@ -76,7 +82,7 @@ public class CardDeliveryTest {
 
     @Test
     void IfEmptyValueOfName() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));
@@ -90,7 +96,7 @@ public class CardDeliveryTest {
 
     @Test
     void IfNotClickCheckbox() {
-        open("http://0.0.0.0:7777");
+
         $("[data-test-id = 'city'] input").setValue("Воронеж");
         $("[placeholder = 'Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder = 'Дата встречи']").setValue(formatter.format(nextDate));

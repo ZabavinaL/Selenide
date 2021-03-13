@@ -10,6 +10,7 @@ build: off
 
 install:
   - java -jar ./artifacts/app-card-delivery.jar -port=7777 &
+  - chmod +x gradlew
 
 build_script:
   - ./gradlew test -Dselenide.headless=true
